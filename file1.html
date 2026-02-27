@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>      AGRICLAIM - Smart Crop Insurance</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+}
+
+header{
+background:#020617;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:22px;
+font-weight:bold;
+}agri.html
+
+.logo span{
+color:#38bdf8;
+}
+
+nav button{
+margin-left:10px;
+padding:8px 15px;
+border:none;
+border-radius:6px;
+background:#1e293b;
+color:white;
+cursor:pointer;
+}
+
+section{
+padding:50px 10%;
+display:none;
+}
+
+section.active{
+display:block;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+margin:15px 0;
+border-radius:10px;
+}
+
+input, select{
+width:100%;
+padding:8px;
+margin:8px 0;
+border:none;
+border-radius:6px;
+}
+
+button.primary{
+background:#38bdf8;
+color:black;
+padding:10px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.dashboard-box{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.box{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+flex:1;
+min-width:200px;
+}
+
+.status{
+font-weight:bold;
+margin-top:10px;
+}
+
+footer{
+text-align:center;
+padding:20px;
+background:#020617;
+margin-top:40px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">AGRI<span>CLAIM</span></div>
+<nav>
+<button onclick="showSection('home')">Home</button>
+<button onclick="showSection('register')">Register</button>
+<button onclick="showSection('dashboard')">Dashboard</button>
+<button onclick="showSection('admin')">Admin</button>
+</nav>
+</header>
+
+<!-- HOME -->
+<section id="home" class="active">
+<h2>Autonomous Crop Insurance System</h2>
+<p>AI-powered parametric insurance based on weather & satellite data.</p>
+
+<div class="card">
+<h3>Features</h3>
+<ul>
+<li>Satellite-based crop monitoring</li>
+<li>Automatic drought detection</li>
+<li>Instant payout trigger</li>
+<li>Fraud-free parametric insurance</li>
+</ul>
+</div>
+</section>
+
+<!-- REGISTER -->
+<section id="register">
+<h2>Farmer Registration</h2>
+
+<div class="card">
+<input type="text" id="name" placeholder="Farmer Name">
+<input type="text" id="location" placeholder="Farm Location">
+<select id="crop">
+<option value="">Select Crop</option>
+<option>Rice</option>
+<option>Wheat</option>
+<option>Cotton</option>
+<option>Maize</option>
+</select>
+<button class="primary" onclick="registerFarmer()">Register</button>
+<p id="regMsg"></p>
+</div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard">
+<h2>Crop Monitoring Dashboard</h2>
+
+<div class="dashboard-box">
+<div class="box">
+<h3>NDVI Score</h3>
+<p id="ndvi">--</p>
+</div>
+
+<div class="box">
+<h3>Rainfall (mm)</h3>
+<p id="rainfall">--</p>
+</div>
+
+<div class="box">
+<h3>Insurance Status</h3>
+<p id="insuranceStatus">--</p>
+</div>
+</div>
+
+<button class="primary" onclick="simulateData()">Check Eligibility</button>
+</section>
+
+<!-- ADMIN -->
+<section id="admin">
+<h2>Admin Panel</h2>
+
+<div class="card">
+<h3>Total Registered Farmers</h3>
+<p id="farmerCount">0</p>
+</div>
+
+<div class="card">
+<h3>Total Payout Triggered</h3>
+<p id="payout">₹0</p>
+</div>
+</section>
+
+<footer>
+AgroCLAIM | Hackathon Project
+</footer>
+
+<script>
+let farmerCount = 0;
+let payoutAmount = 0;
+
+function showSection(id){
+document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
+function registerFarmer(){
+const name = document.getElementById("name").value;
+if(name === ""){
+document.getElementById("regMsg").innerText = "Please enter name.";
+return;
+}
+farmerCount++;
+document.getElementById("farmerCount").innerText = farmerCount;
+document.getElementById("regMsg").innerText = "Registration Successful!";
+}
+
+function simulateData(){
+let ndvi = (Math.random() * 1).toFixed(2);
+let rainfall = Math.floor(Math.random() * 200);
+
+document.getElementById("ndvi").innerText = ndvi;
+document.getElementById("rainfall").innerText = rainfall + " mm";
+
+if(ndvi < 0.4 || rainfall < 50){
+document.getElementById("insuranceStatus").innerText = "Payout Triggered";
+payoutAmount += 10000;
+document.getElementById("payout").innerText = "₹" + payoutAmount;
+}
+else{
+document.getElementById("insuranceStatus").innerText = "Healthy Crop";
+}
+}
+</script>
+
+</body>
+</html>
